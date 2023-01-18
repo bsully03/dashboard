@@ -1,38 +1,53 @@
 
-:root{
-  --primary: lightgrey;
-  --secondary: lightblue;
-  --accent1: lightgrey;
-  --accent2: lightgrey;
-  --accent3: lightgrey;
-  --accent4: lightgrey;
-  --accent5: lightgrey;
+
+/*Defining the color pallet with standard Guidehouse colors*/
+:root {
+  --primary: rgb(147, 213, 0);
+  --secondary: rgb(220, 220, 220);
+  --accent3: rgb(0, 167, 181);
+  --accent4: rgb(255, 125, 30);
+  --accent5: rgba(155, 215, 50, 0.512);
+  --accent6: rgb(233, 40, 65);
+  --accent7: rgb(3, 100, 122);
+  --white: rgb(255, 255, 255);
+  --black: rbg(0, 0, 0);
 }
 
+
 html, body, #root{
-  background-color: var(--primary);
+  background-color: var(--secondary);
   height: 100vh;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .App{
   display: grid;
-  grid-template-columns: .5fr 6fr;
+  grid-template-columns: .4fr 6fr;
   height: 100vh;
 }
 
 .Navigation{
-  background-color: var(--secondary);
-  height: 100%;
+  background-image: linear-gradient(to right, var(--accent7), rgb(1, 49, 60));
   box-shadow: 5px 0px 5px grey;
   padding: 5pt;
+  align-items: center;
 }
 
 .NavIcon{
-  margin:8pt;
+  text-align: center;
+}
+
+.NavIcon i {
+  max-height: 40px;
+  margin: 25pt auto;
+  display: block;
+  max-width: 100%;
+  font-size: 24pt; 
+  align-items: center;
+  color: var(--secondary);
 }
 
 .main-contain{
-  height: 100%;
   padding: 10pt;
 }
 
@@ -40,7 +55,8 @@ html, body, #root{
   display: grid;
   grid-template-rows: 1fr 2fr 2fr;
   grid-template-columns: repeat(12, 1fr);
-  height: 90vh;
+  grid-gap: 15pt;
+  height: calc(100% - 20vh);
 }
 
 .Main div {
@@ -58,5 +74,53 @@ html, body, #root{
   border-style: solid;
   border-color: lightgray;
   border-width: 1pt;
-  margin: 10pt
+  padding: 10pt;
+  border-radius: 3pt;
+}
+
+.imgLogo{
+  max-height: 40px;
+  margin: 15pt auto;
+  display: block;
+  max-width: 100%;
+}
+
+.main-header{
+  padding: 5pt;
+  max-height: 20vh;
+}
+
+.main-header h1{
+  font-size: 4vh;
+}
+
+.main-header p{
+  font-size: 2vh;
+}
+
+i:hover{
+  color: darkgrey;
+}
+
+.tooltip {
+  position: relative;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  min-width: 120px;
+  background-color: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  /* Position the tooltip */
+  position:absolute;
+  left: 110%;
+  top: 5px;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
 }

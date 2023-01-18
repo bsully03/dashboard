@@ -4,7 +4,12 @@ import Card from './Card'
 export default function Main() {
   return (
     <div class='main-contain'>
-      Hello
+      <div className='main-header'>
+        <h1>Overview Dashboard</h1>
+        <p>
+          Welcome, Guest!
+        </p>
+      </div>
       <div class="Main">
         <Card name = 'kpi1'/>
         <Card name = 'kpi2'/>

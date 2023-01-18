@@ -6,9 +6,9 @@ export default function Navigation() {
   return (
     <div class ='Navigation'>
       <BrandIcon/>
-      <NavIcon name="Here"/>
-      <NavIcon name="Test"/>
-      <NavIcon name="Three"/>
+      <NavIcon name="Overview"/>
+      <NavIcon name="Metrics"/>
+      <NavIcon name="Data"/>
     </div>
   )
 }

@@ -2,6 +2,8 @@ import React from 'react'
 
 export default function BrandIcon() {
   return (
-    <div>BrandIcon</div>
+    <div>
+      <img src = '/arrow.png' className = "imgLogo"/>
+    </div>
   )
 }
