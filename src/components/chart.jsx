@@ -10,8 +10,6 @@ class Chart extends Component {
         const metric = this.props.metric
         const type = this.props.type
 
-        console.log(type)
-
         var result = [];
         orders.orders.reduce(function(res, value) {
           if (!res[value[dimension]]) {
@@ -22,24 +20,37 @@ class Chart extends Component {
           return res;
         }, {});
 
-        (this.props.type === 'bar' ? this.drawBarChart(result) : setTimeout(999999))
+        ( type === 'bar' ? this.drawBarChart(result, metric) : setTimeout(999999))
     }
 
-    drawBarChart(result)  {
+    
+    drawBarChart(result, metric)  {
+      
+      const height = 150
+      const width = 250
+
+      const arr = result.map(d => d[metric]);
+      const maxVal = Math.max(...arr)
+
+      const factor = .75
+      
       const svgCanvas = d3.select(this.refs.canvas)
         .append('svg')
-        .attr('width', 100)
-        .attr('height', 100)
+        .attr('class', 'ChartContain')
+        .attr('width', '100%')
+        .attr('height', '80%')
+        .attr('margin', 'auto')
 
       svgCanvas.selectAll('rect')
         .data(result)
         .enter()
         .append('rect')
-        .attr('width',  20)
-        .attr('height', (d) => d[this.props.metric])
-        .attr('fill', 'blue')
-        .attr('x', (d, i) => i * 45)
-        .attr('y', 20)
+        .attr('class', 'bars')
+        .attr('width',  (width / result.length) - 5 )
+        .attr('height', (d) => (d[this.props.metric] / maxVal) * (height * factor))
+        .attr('x', (d, i) => i * (width / result.length))
+        .attr('y', (d) => height - (d[this.props.metric] / maxVal) * (height * factor) )
+        .attr('val', (d)=> d[this.props.metric])
         .text(d  => d[this.props.dimension])
     }
     render() { 
