@@ -33,6 +33,8 @@ class Chart extends Component {
       const maxVal = Math.max(...arr)
 
       const factor = .75
+
+      const padding = 5
       
       const svgCanvas = d3.select(this.refs.canvas)
         .append('svg')
@@ -46,7 +48,7 @@ class Chart extends Component {
         .enter()
         .append('rect')
         .attr('class', 'bars')
-        .attr('width',  (width / result.length) - 5 )
+        .attr('width',  (width / result.length) - padding )
         .attr('height', (d) => (d[this.props.metric] / maxVal) * (height * factor))
         .attr('x', (d, i) => i * (width / result.length))
         .attr('y', (d) => height - (d[this.props.metric] / maxVal) * (height * factor) )
