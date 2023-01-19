@@ -1,7 +1,10 @@
 import React from 'react'
+import Chart from './chart'
 
 export default function Card(props) {
   return (
-    <div class = 'Card'>{props.name}</div>
+    <div className = 'Card'>
+      <Chart/>  
+    </div>
   )
 }

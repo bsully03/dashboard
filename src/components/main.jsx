@@ -3,14 +3,14 @@ import Card from './Card'
 
 export default function Main() {
   return (
-    <div class='main-contain'>
+    <div className ='main-contain'>
       <div className='main-header'>
         <h1>Overview Dashboard</h1>
         <p>
           Welcome, Guest!
         </p>
       </div>
-      <div class="Main">
+      <div className="Main">
         <Card name = 'kpi1'/>
         <Card name = 'kpi2'/>
         <Card name = 'kpi3'/>

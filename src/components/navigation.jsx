@@ -4,7 +4,7 @@ import NavIcon from './NavIcon'
 
 export default function Navigation() {
   return (
-    <div class ='Navigation'>
+    <div className ='Navigation'>
       <BrandIcon/>
       <NavIcon name="Overview"/>
       <NavIcon name="Metrics"/>
