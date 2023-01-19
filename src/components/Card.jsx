@@ -4,7 +4,7 @@ import Chart from './chart'
 export default function Card(props) {
   return (
     <div className = 'Card'>
-      <Chart/>  
+      <Chart props = {props} />  
     </div>
   )
 }
