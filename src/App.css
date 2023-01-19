@@ -64,18 +64,15 @@ html, body, #root{
   height: auto;
   background: white;
   box-shadow: 3px 3px 3px grey;
-}
-
-.Main div:nth-child(n + 5) {
-  grid-column: span 4;
-}
-
-.Card{
   border-style: solid;
   border-color: lightgray;
   border-width: 1pt;
   padding: 10pt;
   border-radius: 3pt;
+}
+
+.Main div:nth-child(n + 5) {
+  grid-column: span 4;
 }
 
 .imgLogo{
@@ -126,9 +123,15 @@ i:hover{
 }
 
 .ChartContain{
-  margin: auto;
+
 }
 
 .bars{
   fill: var(--accent7);
+}
+
+.KpiContain{
+  display:block;
+  width: 100%;
+  height: 50px;
 }

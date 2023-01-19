@@ -15,16 +15,16 @@ export default function Main() {
         </p>
       </div>
       <div className="Main">
-        <Card type = 'kpi'/>
-        <Card type = 'kpi'/>
-        <Card type = 'kpi'/>
-        <Card type = 'kpi'/>
+        <Card type = 'kpi' metric = 'Sales'/>
+        <Card type = 'kpi' metric = 'Profit'/>
+        <Card type = 'kpi' metric = 'Quantity'/>
+        <Card type = 'kpi' metric = {value}/>
         <Card type = 'bar' dimension = 'Category' metric = {value} />
         <Card type = 'column' dimension = {dimension} metric = {value} />
         <Card type = 'bar' dimension = 'Segment' metric = {value} />
-        <Card type = 'bar' dimension = 'Region' metric = {value} />
+        <Card type = 'column' dimension = 'Region' metric = {value} />
         <Card type = 'bar' dimension = 'Sub-Category' metric = {value} />
-        <Card type = 'bar' dimension = 'Ship Mode' metric = {value} />
+        <Card type = 'column' dimension = 'Ship Mode' metric = {value} />
       </div>
     </div>
       
