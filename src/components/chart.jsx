@@ -147,8 +147,18 @@ class Chart extends Component {
     
     
     // here
-    const lineData = this.sumByDimension(orders.orders, "Order Date", metric) 
 
+    var data = orders.orders
+    data = data.map((x) => ({
+      ...x,
+      orderDate: new Date(x["Order Date"]),
+      orderMonthYear:
+        x["Order Date"].substring(0, x["Order Date"].indexOf("/")) +
+        "-" +
+        x["Order Date"].substring(x["Order Date"].length - 4),
+    }));
+
+    var lineData = this.sumByDimension(data, "orderMonthYear", metric); 
     console.log(lineData)
   }
 
