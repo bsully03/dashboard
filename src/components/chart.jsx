@@ -4,22 +4,25 @@ import * as d3 from 'd3'
 import orders from '../orders.json'
 
 class Chart extends Component {
+  
   componentDidMount() {
-    const dimension = this.props.dimension;
-    const metric = this.props.metric;
-    const type = this.props.type
-    
-    const result = this.sumByDimension(orders.orders, dimension, metric)
-    
+    const dimension = this.props.props.dimension;
+    const metric = this.props.props.metric;
+    const type = this.props.props.type;
+    const height = this.props.height;
+    const width = this.props.width;
+
+    const result = this.sumByDimension(orders.orders, dimension, metric);
+
     type === "bar"
-      ? this.drawBarChart(result, metric)
+      ? this.drawBarChart(result, metric, height, width)
       : type === "column"
-      ? this.drawColumnChart(result, metric)
+      ? this.drawColumnChart(result, metric, height, width)
       : type === "kpi"
-      ? this.createKPIChart(result, metric)
-      : setTimeout(999999)
-    
-  };
+      ? this.createKPIChart(result, metric, height, width)
+      : setTimeout(999999);
+
+  }
 
   sumByDimension(array, dimension, metric, result = []) {
     array.reduce(function (res, value) {
@@ -31,11 +34,9 @@ class Chart extends Component {
       return res;
     }, {});
     return result;
-  };
+  }
 
-  drawBarChart(result, metric) {
-    const height = 150;
-    const width = 250;
+  drawBarChart(result, metric, height, width) {
 
     const arr = result.map((d) => d[metric]);
     const maxVal = Math.max(...arr);
@@ -48,8 +49,8 @@ class Chart extends Component {
       .select(this.refs.canvas)
       .append("svg")
       .attr("class", "ChartContain")
-      .attr("width", "100%")
-      .attr("height", "80%")
+      .attr("width", width)
+      .attr("height", height)
       .attr("margin", "auto");
 
     svgCanvas
@@ -61,21 +62,19 @@ class Chart extends Component {
       .attr("width", width / result.length - padding)
       .attr(
         "height",
-        (d) => (d[this.props.metric] / maxVal) * (height * factor)
+        (d) => (d[this.props.props.metric] / maxVal) * (height * factor)
       )
       .attr("x", (d, i) => i * (width / result.length))
       .attr(
         "y",
-        (d) => height - (d[this.props.metric] / maxVal) * (height * factor)
+        (d) =>
+          height - (d[this.props.props.metric] / maxVal) * (height * factor)
       )
-      .attr("val", (d) => d[this.props.metric])
-      .text((d) => d[this.props.dimension]);
+      .attr("val", (d) => d[this.props.props.metric])
+      .text((d) => d[this.props.props.dimension]);
   }
 
-  drawColumnChart(result, metric) {
-    const height = 150;
-    const width = 250;
-
+  drawColumnChart(result, metric, height, width) {
     const arr = result.map((d) => d[metric]);
     const maxVal = Math.max(...arr);
 
@@ -87,8 +86,8 @@ class Chart extends Component {
       .select(this.refs.canvas)
       .append("svg")
       .attr("class", "ChartContain")
-      .attr("width", "100%")
-      .attr("height", "80%")
+      .attr("width", width)
+      .attr("height", height)
       .attr("margin", "auto");
 
     svgCanvas
@@ -98,7 +97,7 @@ class Chart extends Component {
       .append("rect")
       .attr("class", "bars")
       .attr("height", (height / result.length - padding) * factor)
-      .attr("width", (d) => (d[this.props.metric] / maxVal) * width)
+      .attr("width", (d) => (d[this.props.props.metric] / maxVal) * width)
       .attr(
         "y",
         (d, i) =>
@@ -107,11 +106,11 @@ class Chart extends Component {
           i * padding
       )
       .attr("x", 0)
-      .attr("val", (d) => d[this.props.metric])
-      .text((d) => d[this.props.dimension]);
+      .attr("val", (d) => d[this.props.props.metric])
+      .text((d) => d[this.props.props.dimension]);
   }
 
-  createKPIChart(result, metric) {
+  createKPIChart(result, metric, height, width) {
     function amount(item) {
       return item[metric];
     }
@@ -132,23 +131,21 @@ class Chart extends Component {
       maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
     });
 
-    const svgCanvas = d3.select(this.refs.canvas)
+    const svgCanvas = d3
+      .select(this.refs.canvas)
       .append("svg")
       .attr("class", "KpiContain");
 
-    svgCanvas.append("text")
-      .text(metric)
-      .attr("fill", "black")
-      .attr("y", 15);
-    svgCanvas.append("text")
+    svgCanvas.append("text").text(metric).attr("fill", "black").attr("y", 15);
+    svgCanvas
+      .append("text")
       .text(formatter.format(kpiSum))
       .attr("fill", "black")
       .attr("y", 40);
-    
-    
+
     // here
 
-    var data = orders.orders
+    var data = orders.orders;
     data = data.map((x) => ({
       ...x,
       orderDate: new Date(x["Order Date"]),
@@ -158,8 +155,105 @@ class Chart extends Component {
         x["Order Date"].substring(x["Order Date"].length - 4),
     }));
 
-    var lineData = this.sumByDimension(data, "orderMonthYear", metric); 
-    console.log(lineData)
+    var lineData = this.sumByDimension(data, "orderDate", metric);
+    //var data = lineData
+
+    var data = [
+      { date: new Date("1/1/2022"), sales: 4 },
+      { date: new Date("1/20/2022"), sales: 8 },
+      { date: new Date("3/1/2022"), sales: 6 },
+      { date: new Date("4/1/2022"), sales: 2 },
+      { date: new Date("5/1/2022"), sales: 1 },
+      { date: new Date("6/1/2022"), sales: 7 },
+    ];
+
+    var maxY = 8,
+      minY = 1,
+      maxX = new Date("6/1/2022"),
+      minX = new Date("1/1/2022");
+
+    var xScale = d3.scaleTime().domain([minX, maxX]).range([0, width]),
+      yScale = d3.scaleLinear().domain([minY, maxY]).range([height, 0]);
+
+    var line = d3
+      .line()
+      .x(function (d) {
+        return xScale(d.date);
+      })
+      .y(function (d) {
+        return yScale(d["sales"]);
+      })
+      .curve(d3.curveMonotoneX);
+
+    svgCanvas
+      .append("path")
+      .datum(data)
+      .attr("class", "line")
+      .attr("transform", "translate(" + 100 + "," + 15 + ")")
+      .attr("d", line)
+      .style("fill", "none")
+      .style("stroke", "#03647a")
+      .style("stroke-width", "2");
+  }
+
+  createLineChart(height, width) {
+    var data = [
+      { date: new Date("1/1/2022"), sales: 4 },
+      { date: new Date("2/1/2022"), sales: 8 },
+      { date: new Date("3/1/2022"), sales: 6 },
+      { date: new Date("4/1/2022"), sales: 2 },
+      { date: new Date("5/1/2022"), sales: 1 },
+      { date: new Date("6/1/2022"), sales: 7 },
+    ];
+
+    var maxY = 8,
+      minY = 1,
+      maxX = new Date("6/1/2022"),
+      minX = new Date("1/1/2022");
+
+    var xScale = d3.scaleTime().domain([minX, maxX]).range([0, width]),
+      yScale = d3.scaleLinear().domain([minY, maxY]).range([height, 0]);
+
+    const svgCanvas = d3
+      .select(this.refs.canvas)
+      .append("svg")
+      .attr("class", "KpiContain");
+
+    svgCanvas
+      .append("g")
+      .selectAll("dot")
+      .data(data)
+      .enter()
+      .append("circle")
+      .attr("cx", function (d) {
+        return xScale(d.date);
+      })
+      .attr("cy", function (d) {
+        return yScale(d.sales);
+      })
+      .attr("r", 2)
+      .attr("transform", "translate(" + 80 + "," + -30 + ")")
+      .style("fill", "#CC0000");
+
+    var line = d3
+      .line()
+      .x(function (d) {
+        return xScale(d.date);
+      })
+      .y(function (d) {
+        return yScale(d.sales);
+      })
+      .curve(d3.curveMonotoneX);
+
+    svgCanvas
+      .append("path")
+      .datum(data)
+      .attr("class", "line")
+      .attr("transform", "translate(" + 80 + "," + -30 + ")")
+      .attr("d", line)
+      .style("fill", "none")
+      .style("stroke", "#CC0000")
+      .style("stroke-width", "2");
   }
 
   render() {

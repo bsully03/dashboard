@@ -8,10 +8,11 @@
   --accent4: rgb(255, 125, 30);
   --accent5: rgba(155, 215, 50, 0.512);
   --accent6: rgb(233, 40, 65);
-  --accent7: rgb(3, 100, 122);
+  --accent7: #03647a;
   --white: rgb(255, 255, 255);
   --black: rbg(0, 0, 0);
 }
+
 
 
 html, body, #root{
