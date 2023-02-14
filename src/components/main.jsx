@@ -15,10 +15,10 @@ export default function Main() {
         </p>
       </div>
       <div className="Main">
-        <Card type = 'kpi' metric = 'Sales'/>
-        <Card type = 'kpi' metric = 'Profit'/>
-        <Card type = 'kpi' metric = 'Quantity'/>
-        <Card type = 'kpi' metric = {value}/>
+        <Card type = 'kpi' dimension = {dimension} metric = 'Sales'/>
+        <Card type = 'kpi' dimension = {dimension} metric = 'Profit'/>
+        <Card type = 'kpi' dimension = {dimension} metric = 'Quantity'/>
+        <Card type = 'kpi' dimension = {dimension} metric = {value}/>
         <Card type = 'bar' dimension = 'Category' metric = {value} />
         <Card type = 'column' dimension = {dimension} metric = {value} />
         <Card type = 'bar' dimension = 'Segment' metric = {value} />

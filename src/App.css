@@ -4,7 +4,7 @@
 :root {
   --primary: rgb(147, 213, 0);
   --secondary: rgb(220, 220, 220);
-  --accent3: rgb(0, 167, 181);
+  --accent3: #00a7b5;
   --accent4: rgb(255, 125, 30);
   --accent5: rgba(155, 215, 50, 0.512);
   --accent6: rgb(233, 40, 65);
