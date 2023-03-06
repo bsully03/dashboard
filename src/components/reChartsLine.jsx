@@ -2,56 +2,75 @@ import React, { PureComponent } from "react";
 import {
   LineChart,
   Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
+  XAxis
 } from "recharts";
+import formatter from "../helper functions/formatter";
 
-import orders from "../orders.json";
-
-export default class ReChartsLine extends PureComponent {
-  static demoUrl = "https://codesandbox.io/s/tiny-line-chart-r5z0f";
-  
+export default class ReChartsLine extends PureComponent {  
   
   render() {
   
-  const metric = this.props.props.props.metric;
-  const data = orders.orders
+  const metric = this.props.metric;
+  const data = this.props.data
   
   var arr = []
   
-  function add(arr, ym, val) {
+  function add(arr, ym, val, sortDate, metric) {
     const found = arr.some((el) => el.date === ym);
     if (!found) {
-      arr.push({ 'date': ym, 'val': val });
+      arr.push({ 'date': ym, [metric]: val, 'sortDate': sortDate });
     } else {
       let obj = arr.find((f) => f.date === ym);
-      if (obj) obj.val += val 
+      if (obj) obj[metric] += val 
     }
     return arr;
   }
+
   
   for (var i = 0; i < data.length; i++) {
     var date = new Date(data[i]['Order Date']);
-    var ym = date.getFullYear() + "-" + (date.getMonth()+1);
+    
+    const months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+    var ym = months[date.getMonth()] + " " + date.getFullYear()
     var val = data[i][metric]
-    arr = add(arr,ym, val)
+    arr = add(arr, ym, val, date, metric)
   }
   
-  console.log(arr)
-    
+  arr = arr.sort(function (a, b) {
+    return a.sortDate - b.sortDate;
+  });
+
     return (
       <ResponsiveContainer width="100%" height="100%">
         <LineChart width={300} height={100} data={arr}>
-          <Tooltip />
+          <Tooltip
+            formatter={
+              metric === 'Quantity' ?
+              (value) => new Intl.NumberFormat("en").format(value) :
+              (value) => formatter.format(value)
+            }
+          />
+          <XAxis dataKey="date" hide={true} />
           <Line
             type="monotone"
-            dataKey="val"
+            dataKey={metric}
             stroke="#03647a"
-            strokeWidth={2}
+            strokeWidth={3}
             dot={false}
           />
         </LineChart>

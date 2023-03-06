@@ -9,7 +9,7 @@
   --accent5: rgba(155, 215, 50, 0.512);
   --accent6: rgb(233, 40, 65);
   --accent7: #03647a;
-  --white: rgb(255, 255, 255);
+  --white: rgb(245, 245, 245);
   --black: rbg(0, 0, 0);
 }
 
@@ -63,7 +63,7 @@ html, body, #root{
 .Card {
   grid-column: span 3;
   height: auto;
-  background: white;
+  background: var(--white);
   box-shadow: 3px 3px 3px grey;
   border-style: solid;
   border-color: lightgray;
@@ -86,6 +86,7 @@ html, body, #root{
 .main-header{
   padding: 5pt;
   max-height: 20vh;
+  display: flex;
 }
 
 .main-header h1{

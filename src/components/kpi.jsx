@@ -1,15 +1,23 @@
 import React from 'react'
 import ReChartsLine from './reChartsLine'
+import formatter from '../helper functions/formatter'
 
 export default function Kpi(props) {
-    // complete necessary data transformations here
-    // Add appropriate formatting here
+
+  let result = props.data.reduce((a, b) => {
+    return a + b[props.metric];
+  }, 0);
+
   return (
     <div style={{ width: "100%", height: 50 }}>
-        <span>{props.props.metric}</span>
-        <br/>
-        <span>1,000</span>
-        <ReChartsLine props={props} />
+      <span>{props.metric}</span>
+      <br />
+      <span>
+        {
+          props.metric === 'Quantity' ? result.toLocaleString() : formatter.format(result)
+        }
+      </span>
+      <ReChartsLine {...props} />
     </div>
   );
 }

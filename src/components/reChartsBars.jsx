@@ -2,20 +2,14 @@ import React, { PureComponent } from "react";
 import {
   BarChart,
   Bar,
-  Cell,
   XAxis,
   YAxis,
-  CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
 } from "recharts";
+import formatter from "../helper functions/formatter";
 
-
-import orders from "../orders.json";
-
-export default class Example extends PureComponent {
-  static demoUrl = "https://codesandbox.io/s/tiny-line-chart-r5z0f";
+export default class ReChartsBar extends PureComponent {
 
   sumByDimension(array, dimension, metric, result = []) {
     array.reduce(function (res, value) {
@@ -29,13 +23,12 @@ export default class Example extends PureComponent {
     return result;
   }
 
-  
   render() {
-    const dimension = this.props.props.dimension;
-    const value = this.props.props.metric;
-    const type = this.props.props.type;
+    const dimension = this.props.dimension;
+    const value = this.props.metric;
+    const type = this.props.type;
 
-    var data = this.sumByDimension(orders.orders, dimension, value)
+    var data = this.sumByDimension(this.props.data, dimension, value)
 
     return (
       <div style={{ width: "100%", height: "100%" }}>
@@ -46,7 +39,13 @@ export default class Example extends PureComponent {
             data={data}
             layout={type === "bar" ? "horizontal" : "vertical"}
           >
-            <Tooltip />
+          <Tooltip
+            formatter={
+              value === 'Quantity' ?
+              (value) => new Intl.NumberFormat("en").format(value) :
+              (value) => formatter.format(value)
+            }
+          />
             <XAxis
               type={type === "bar" ? "category" : "number"}
               dataKey={type === "bar" ? dimension : ""}
