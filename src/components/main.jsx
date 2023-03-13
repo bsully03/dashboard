@@ -6,16 +6,17 @@ import { useState } from 'react';
 
 export default function Main() {
 
-  const [minDate, setMinDate] = useState(new Date("1/1/2019"));
+  const [minDate, setMinDate] = useState(new Date("01/01/2019"));
   const [maxDate, setMaxDate] = useState(new Date("12/30/2019"));
   const [value, setValue] = useState("Profit");
 
   const handleMinDateChange = (event) => {
-    console.log(event.target.value)
-    setMinDate(new Date(event.target.value));
+    var myDateArray = event.target.value.split("-");
+    setMinDate(new Date(myDateArray[0], myDateArray[1]-1, myDateArray[2]));
   };
   const handleMaxDateChange = (event) => {
-    setMaxDate(new Date (event.target.value));
+    var myDateArray = event.target.value.split("-");
+    setMaxDate(new Date(myDateArray[0], myDateArray[1]-1, myDateArray[2]));
   };
 
   const handleValueChange = (event) => {

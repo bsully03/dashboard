@@ -2,12 +2,12 @@ import React from "react";
 
 export default function Header(props) {
   function getFullMonth(date) {
-    const month = date.getMonth() + 1;
+    const month = date.getMonth()+1;
     return month < 10 ? "0" + month : month;
   }
 
   function getFullDay(date) {
-    const day = date.getDate()+1;
+    const day = date.getDate();
     return day < 10 ? "0" + day : day;
   }
 
@@ -31,7 +31,7 @@ export default function Header(props) {
         <h1>Overview Dashboard</h1>
         <p>Welcome, Guest!</p>
       </div>
-      <div>
+      <div className='form-group'>
         <label>Start date: </label>
         <input
           type="date"
@@ -39,7 +39,7 @@ export default function Header(props) {
           name="start"
           value={minDateUse}
           min="2018-01-01"
-          max="2024-12-31"
+          max={maxDateUse}
           onChange={props.handleMinDateChange}
         ></input>
         <label>End date: </label>
@@ -48,7 +48,7 @@ export default function Header(props) {
           id="end"
           name="end"
           value={maxDateUse}
-          min="2018-01-01"
+          min={minDateUse}
           max="2024-12-31"
           onChange={props.handleMaxDateChange}
         ></input>
@@ -57,7 +57,8 @@ export default function Header(props) {
             id="metric" 
             name="metric"
             onChange={props.handleValueChange}
-            value = {props.value}>
+            value = {props.value}
+            className = 'form-select'>
           <option value="Profit">Profit</option>
           <option value="Sales">Sales</option>
           <option value="Quantity">Quantity</option>
