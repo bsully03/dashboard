@@ -8,9 +8,10 @@ export default function Card(props) {
     <div  className="Card" >
       {props.type === "kpi" ? (
         <Kpi {...props} />
-      ) : (
-        <ReChartsBar {...props} />
-      )}
+        ) : (
+          <ReChartsBar {...props} />
+          )}
+
     </div>
   );
 }

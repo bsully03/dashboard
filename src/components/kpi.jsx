@@ -9,15 +9,17 @@ export default function Kpi(props) {
   }, 0);
 
   return (
-    <div style={{ width: "100%", height: 50 }}>
-      <span>{props.metric}</span>
+    <div style={{ width: "100%", height: '20%' }}>
+      <span className = 'kpiTitle'>{props.metric}</span>
       <br />
       <span>
         {
           props.metric === 'Quantity' ? result.toLocaleString() : formatter.format(result)
         }
       </span>
-      <ReChartsLine {...props} />
+        <div style={{ width: "75%", height: 50, float: 'right' }}>
+        <ReChartsLine {...props} />
+        </div>
     </div>
   );
 }
